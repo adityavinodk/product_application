@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Products</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat|Open+Sans|Raleway" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open+Sans', sans-serif;
+        }
+
+        .navbar {
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            position: fixed;
+            background-color: #333333;
+            width: 100%;
+            text-align: right;
+        }
+
+        .navbar a {
+            float: right;
+            /* display: block; */
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Style the header */
+        .header {
+            background-color: #f1f1f1;
+            padding: 30px;
+            text-align: center;
+            font-size: 35px;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 100px;
+            height: 400px;
+            /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Style the footer */
+        .footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            .column {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="index.html" style="float: left; font-size: 20px;"><b>Fandroid</b></a>
+    </div>
+
+    <div class="header">
+        <h2>Products</h2>
+    </div>
+
+    <div class="row">
+        <div class="column" style="background-color:rgb(209, 193, 193); align-content: center">
+            <img src="images/OnePlus 6.jpg" alt="Picture 1" height="200" width="150">
+            <h5><a href="productPage.html">Product 1</a><br>
+                Price 1<br>
+                Availability 1
+            </h5>
+        </div>
+
+        <div class="column" style="background-color:rgb(209, 193, 193); align-items: center">
+            <img src="images/OnePlus 6.jpg" alt="Picture 1" height="200" width="150">
+            <h5><a href="productPage.html">Product 2</a><br>
+                Price 2<br>
+                Availability 2
+            </h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="column" style="background-color:rgb(209, 193, 193); align-items: center">
+            <img src="images/OnePlus 6.jpg" alt="Picture 1" height="200" width="150">
+            <h5><a href="productPage.html">Product 3</a><br>
+                Price 3<br>
+                Availability 3
+            </h5>
+        </div>
+
+        <div class="column" style="background-color:rgb(209, 193, 193); align-items: center">
+            <img src="images/OnePlus 6.jpg" alt="Picture 1" height="200" width="150">
+            <h5><a href="productPage.html">Product 4</a><br>
+                Price 4<br>
+                Availability 4
+            </h5>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p></p>
+    </div>
+
+</body>
+
+</html>

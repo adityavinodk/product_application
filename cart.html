@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Product</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .navbar {
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            position: fixed;
+            background-color: #333333;
+            width: 100%;
+            text-align: right;
+        }
+
+        .navbar a {
+            float: right;
+            /* display: block; */
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Style the header */
+        .header {
+            background-color: #f1f1f1;
+            padding: 30px;
+            text-align: center;
+            font-size: 35px;
+        }
+
+        /* Style the footer */
+        .footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Style the content */
+        .content {
+            background-color: #ddd;
+            padding: 10px;
+            height: 600px;
+        }
+
+        .button {
+            background-color: #ffffff;
+            border: none;
+            color: rgb(12, 11, 11);
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="index.html" style="float: left; font-size: 20px;"><b>TwoPlus</b></a>
+    </div>
+    <div class="header">
+        <h2>Cart</h2>
+    </div>
+    <div class="content">
+        <img src="images/OnePlus 6.jpg" alt="Picture" height="100px" width="100px">
+        <h4>Name Price Quantity Total Price</h4>
+    </div>
+
+    <div class="footer">
+        <p>Total: </p>
+        <button class="button">Confirm</button><button class="button">Cancel</button>
+    </div>
+
+</body>
+
+</html>
