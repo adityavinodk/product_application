@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Product</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        .navbar {
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            position: fixed;
+            background-color: #333333;
+            width: 100%;
+            text-align: right;
+        }
+        
+        .abc {
+            background-image: url("../images/ppage1.png");
+            background-color: white;
+            background-size: 85%;
+            height: 100%;
+        }
+        
+        .navbar a {
+            float: right;
+            /* display: block; */
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        h1 {
+            font-size: 70px;
+            padding: 20%;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 40px;
+            text-align: left;
+            line-height: 0%;
+        }
+        
+        h4 {
+            line-height: 0%;
+        }
+        
+        .skc {
+            font-size: 25px;
+            line-height: 0%;
+        }
+        
+        p {
+            font-size: 20px;
+            text-align: center;
+        }
+        
+        .button {
+            background-color: #ffffff;
+            border: none;
+            border-color: #333333;
+            color: rgb(12, 11, 11);
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+        
+        #buttblack {
+            background-color: black;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            border-color: slategray;
+            color: white;
+            width: 70px;
+        }
+        
+        #buttred {
+            background-color: red;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-color: white;
+            color: white;
+            width: 70px;
+        }
+        
+        .buttonbig {
+            background-color: #ffffff;
+            border: none;
+            color: rgb(12, 11, 11);
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+        /* Style the topnav links */
+        
+        .topnav a {
+            float: right;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        /* Style the header */
+        
+        .header {
+            background-image: url("images/bg1.jpg");
+            background-color: #cccccc;
+            background-size: 100%;
+            height: 100%;
+        }
+        
+        .column {
+            float: left;
+            width: 50%;
+            padding: 100px;
+            height: 700px;
+            /* Should be removed. Only for demonstration */
+        }
+        /* Clear floats after the columns */
+        
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        /* Style the footer */
+        
+        .footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+        }
+        /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+        
+        @media (max-width: 600px) {
+            .column {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="abc">
+        <h1>Beauty redefined.</h1>
+    </div>
+    <div class="navbar">
+        <a href="../index.html">Home</a>
+        <a href="../products.html">Products</a>
+        <a href="../cart.html">Cart</a>
+        <a href="../index.html" style="float: left; font-size: 20px;"><b>TwoPlus</b></a>
+    </div>
+
+    <div class="row">
+        <div class="column" style="background-color:#aaa;">
+            <img src="../images/TwoPlus_One.png" alt="Picture" height="500px" width="500px">
+        </div>
+
+        <div class="row">
+            <div class="column" style="background-color:#aaa;">
+                <br><br><br>
+                <h2>TwoPlus One</h2>
+                <h3>The world's most powerful circuitry embedded in<br>a design that will make you go wild.</h3>
+                <br></br>
+                <div id='colorButton'>
+                    <button class="button" id="buttblack" name="color" value="black">Black</button><button class="button"
+                        id="buttred" name="color" value="red">Red</button>
+                </div>
+                <br><br>
+                <!-- <button class="button">Size1</button><button class="button">Size2</button> -->
+                <h4>Price</h4>
+                <h3 class="skc">$999</h3><br>
+                <h4>Quantity</h4>
+                <input type='number' id='chooseAmount' name='quantity' min='1' max='5' />
+                <br><br>
+                <button class="buttonbig" onclick="addToCart()">Add To Cart</button>
+                <button class="buttonbig" onclick="getCart()">Get Cart</button>
+            </div>
+        </div>
+        <div id="response"></div>
+    </div>
+    <script type="text/javascript">
+        var chosenColor = 'black',
+            chosenQuantity, prodObject;
+        var colorDiv = document.getElementById('colorButton');
+        var xhttp = new XMLHttpRequest();
+        var buttons = colorDiv.getElementsByTagName('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function (e) {
+                chosenColor = e.target.value;
+            })
+        }
+        var quantity = document.getElementById('chooseAmount').defaultValue = 1;
+        function addToCart() {
+            prodObject = new Object();
+            prodObject.name = 'TwoPlus_One';
+            prodObject.price = 999;
+            prodObject.color = chosenColor;
+            prodObject.chosenQuantity = parseInt(document.getElementById('chooseAmount').value);
+            console.log(prodObject);
+            var stringData = JSON.stringify(prodObject);
+            console.log(stringData);
+            xhttp.open('POST', '../backend.php', true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(stringData);
+        }
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("response").innerHTML = this.responseText;
+            }
+        };
+    </script>
+
+</body>
+
+</html>

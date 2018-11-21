@@ -2,19 +2,15 @@
 <html lang="en">
 
 <head>
-    <title>Product</title>
+    <title>Cart</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
             box-sizing: border-box;
         }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .navbar {
+        
+        .topnav {
             overflow: hidden;
             top: 0;
             right: 0;
@@ -23,72 +19,202 @@
             width: 100%;
             text-align: right;
         }
-
-        .navbar a {
+        /* Style the topnav links */
+        
+        .topnav a {
             float: right;
-            /* display: block; */
+            display: block;
             color: #f2f2f2;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
         }
-
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+        /* Style the topnav links */
+        
+        .topnav a {
+            float: right;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
         /* Style the header */
+        
         .header {
             background-color: #f1f1f1;
             padding: 30px;
             text-align: center;
             font-size: 35px;
         }
-
+        /* Style the content */
+        
+        .content {
+            background-color: #ddd;
+            padding: 10px;
+            height: 400px;
+        }
         /* Style the footer */
+        
         .footer {
             background-color: #f1f1f1;
             padding: 10px;
             text-align: center;
         }
-
-        /* Style the content */
-        .content {
-            background-color: #ddd;
-            padding: 10px;
-            height: 600px;
-        }
-
-        .button {
+        
+        .buttonbig {
             background-color: #ffffff;
             border: none;
             color: rgb(12, 11, 11);
-            padding: 5px 10px;
+            padding: 15px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
         }
+        
+        .Table {
+            display: table;
+            justify-content: center;
+        }
+        
+        .Title {
+            display: table-caption;
+            text-align: left;
+            font-weight: bold;
+            font-size: 35px;
+        }
+        
+        .Heading {
+            display: table-row;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .Row {
+            display: table-row;
+        }
+        
+        .Cell {
+            display: table-cell;
+            border: none;
+            border-width: thin;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+        
+        .imgc {
+            width: 20%;
+        }
+        
+        .prodnc {
+            width: 40%;
+        }
+        
+        .qtyc {
+            width: 10%;
+        }
+        
+        .costc {
+            width: 10%;
+        }
+        
+        .totc {
+            width: 20%
+        }
+        
+        #carta {
+            background-color: slategray;
+            left: 0%;
+        }
+    </style>
     </style>
 </head>
 
 <body>
 
-    <div class="navbar">
+    <div class="topnav">
         <a href="index.html">Home</a>
         <a href="products.html">Products</a>
         <a href="cart.html">Cart</a>
         <a href="index.html" style="float: left; font-size: 20px;"><b>TwoPlus</b></a>
     </div>
+
     <div class="header">
-        <h2>Cart</h2>
-    </div>
-    <div class="content">
-        <img src="images/OnePlus 6.jpg" alt="Picture" height="100px" width="100px">
-        <h4>Name Price Quantity Total Price</h4>
+        <h2><br>Your cart<br></h2>
     </div>
 
-    <div class="footer">
-        <p>Total: </p>
-        <button class="button">Confirm</button><button class="button">Cancel</button>
+    <div id="carta">
+        <div class="Table">
+            <div class="Title">
+                <p style="padding: 20px;"><u>Items</u></p>
+            </div>
+            <!-- <div class="Row">
+                <div class="Cell imgc">
+                </div>
+                <div class="Cell prodnc">
+                    <p>Product Name</p>
+                </div>
+                <div class="Cell costc">
+                    <p>Cost</p>
+                </div>
+                <div class="Cell qtyc">
+                    Quantity <input type='number' name='quantity' min='1' max='5' class="input_quant"/>
+                </div>
+                <div class="Cell totc">
+                    <p>Total</p>
+                </div>
+            </div>
+        </div> -->
     </div>
-
+    <button onclick="deleteCart()">Delete Cart</button>
+    <button><a href="bill.html">Proceed to Checkout</a></button>
+    <script type='text/javascript'>
+        var newContent = '<div class="Row"><div class="Cell imgc"></div><div class="Cell prodnc"><p>Product Name</p></div><div class="Cell costc"><p>Cost</p></div><div class="Cell qtyc">Quantity <input type="number" id="chooseAmount" name="quantity" min="1" max="5" class="input_quant"/></div><div class="Cell totc"><p>Total</p></div></div>';
+        var xhttp = new XMLHttpRequest();
+        var addToCart = document.getElementsByClassName('Table')[0];
+        xhttp.open('GET', 'cart.php', true);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                addToCart.innerHTML = '<div class="Title"><p style="padding: 20px;"><u>Items</u></p></div>';
+                if(this.response != "No Cart"){
+                    var response = JSON.parse(this.response);
+                    console.log(response);
+                    for(a in response){
+                        console.log(response[a]);
+                        addToCart.innerHTML += newContent;
+                        var divElement = addToCart.getElementsByClassName('Row')[addToCart.getElementsByClassName('Row').length-1]
+                        var imageUrl = 'images/'+response[a]['name']+'.png'
+                        divElement.getElementsByClassName('Cell imgc')[0].innerHTML+= '<img src="'+imageUrl+'" width="100" height="100">'
+                        divElement.getElementsByClassName('Cell prodnc')[0].innerText = response[a]['name'];
+                        divElement.getElementsByClassName('Cell costc')[0].innerText = response[a]['price'];
+                        divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0].defaultValue = response[a]['quantity'];
+                        console.log(divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0]);   
+                        var totalPrice = response[a]['chosenQuantity']*(response[a]['price']);
+                        totalPrice = totalPrice.toString();
+                        divElement.getElementsByClassName('Cell totc')[0].innerHTML = '<p>Total Price - '+totalPrice+'</p>'
+                    }
+                }
+            }
+        };
+        function deleteCart(){
+            xhttp.open('GET', 'deleteCart.php', true);
+            xhttp.send();
+        }
+    </script>
 </body>
 
 </html>
