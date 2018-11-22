@@ -81,14 +81,54 @@
 
     <div class="content">
         <h2>Bill Summary</h2>
+        <br>
+        <br>
+        <table class="tb" border=2px cellspacing="0" cellpadding="10">
+            <tr>
+                <th>Product Name</th>
+                <th>Product Quantity</th>
+                <th>Product Price</th>
+                <th>Product Subtotal</th>
+            </tr>
+        </table>
         <br></br>
-        <br></br>
+        <div class="final">
         <p>Address</p>
-        <input type="text" name="address" height="400px" width="200px">
-        <br></br>
-        <br></br>
-        <button class="buttonbig">Confirm</button><button class="buttonbig">Cancel</button>
+        <textarea class="address" cols="20" rows="4">Enter Address Here</textarea>
+        <br></br> 
+        <button class="buttonbig" value="True"></button>Confirm</button><button class="buttonbig">Cancel</button>
+        </div>
     </div>
+    <script type='text/javascript'>
+        var newContent = '<tr class="Row"><td class="n"></td><th class="q"></td><td class="p"></td><td class="st"></td></tr>';
+        var xhttp = new XMLHttpRequest();
+        var addToCart = document.getElementsByClassName('tb')[0];
+        xhttp.open('GET', 'cart.php', true);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if(this.response != "No Cart"){
+                    var response = JSON.parse(this.response);
+                    console.log(response);
+                    var comp = 0;
+                    for(a in response){
+                        console.log(response[a]);
+                        addToCart.innerHTML += newContent;
+                        var divElement = addToCart.getElementsByClassName('Row')[addToCart.getElementsByClassName('Row').length-1]
+                        divElement.getElementsByClassName('n')[0].innerText = response[a]['name'];
+                        divElement.getElementsByClassName('q')[0].innerText=response[a]['chosenQuantity'];  
+                        divElement.getElementsByClassName('p')[0].innerText = response[a]['price'];
+                        var totalPrice = response[a]['chosenQuantity']*(response[a]['price']);
+                        comp+=totalPrice;
+                        totalPrice = totalPrice.toString();
+                        divElement.getElementsByClassName('st')[0].innerHTML =totalPrice;
+                    }
+                    addToCart.innerHTML+='<tr><td colspan="2">Total</td><td colspan="2">'+comp+"</td></tr>";
+                }
+            }
+        };
+
+        </script>
 
 </body>
 
