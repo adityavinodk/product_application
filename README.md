@@ -1,2 +1,2 @@
 # wt-2018
-This project is done for Web Technologies Course
+A basic e-commerce website which uses the Apache Server.
