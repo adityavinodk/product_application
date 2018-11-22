@@ -130,9 +130,9 @@
         <br></br>
         <div class="final">
             <p>Address</p>
-            <textarea class="address" cols="20" rows="4">Enter Address Here</textarea>
+            <textarea class="address" cols="100" rows="10" placeholder="Enter Address Here"></textarea>
             <br></br>
-            <button class="buttonbig" id="conf" value="True">Confirm</button><button class="buttonbig" id="canc">Cancel</button>
+            <button class="buttonbig" id="conf" value="True" onclick="confirmed()">Confirm</button><a href="cart.html"><button class="buttonbig" id="canc">Cancel</button></a>
         </div>
     </div>
     <script type='text/javascript'>
@@ -163,6 +163,12 @@
                 }
             }
         };
+        function confirmed(){
+            alert("Hey the delivery has been confirmed to "+document.getElementsByClassName('address')[0].value+'. Thank you for shopping with us!');
+            xhttp.open('GET', './server/deleteCart.php', true);
+            xhttp.send();
+            window.location.href = "cart.html";
+        }
     </script>
 
 </body>

@@ -4,10 +4,8 @@
         $data = file_get_contents("php://input");
         $objData = json_decode($data);
         $objArray = array();
-        foreach($_SESSION['cart'] as $key=>$val){
-            if($key==$objData['name'] && $objData['quantity']!=0){
-                $val['chosenQuantity']=$objData['quantity'];
-            }
-        }
+        $name = $objData->name;
+        $_SESSION['cart']->$name->chosenQuantity = $objData->quantity;
+        print_r($_SESSION['cart']);
     }
 ?>
