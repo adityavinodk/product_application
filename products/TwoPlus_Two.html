@@ -216,7 +216,7 @@
             console.log(prodObject);
             var stringData = JSON.stringify(prodObject);
             console.log(stringData);
-            xhttp.open('POST', '../backend.php', true);
+            xhttp.open('POST', '../server/backend.php', true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(stringData);
         }

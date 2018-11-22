@@ -185,7 +185,7 @@
         var newContent = '<div class="Row"><div class="Cell imgc"></div><div class="Cell prodnc"><p>Product Name</p></div><div class="Cell costc"><p>Cost</p></div><div class="Cell qtyc">Quantity <input type="number" id="chooseAmount" name="quantity" min="1" max="5" class="input_quant"/></div><div class="Cell totc"><p>Total</p></div></div>';
         var xhttp = new XMLHttpRequest();
         var addToCart = document.getElementsByClassName('Table')[0];
-        xhttp.open('GET', 'cart.php', true);
+        xhttp.open('GET', './server/cart.php', true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -201,7 +201,20 @@
                         divElement.getElementsByClassName('Cell imgc')[0].innerHTML+= '<img src="'+imageUrl+'" width="100" height="100">'
                         divElement.getElementsByClassName('Cell prodnc')[0].innerText = response[a]['name'];
                         divElement.getElementsByClassName('Cell costc')[0].innerText = response[a]['price'];
-                        divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0].defaultValue = response[a]['quantity'];
+                        var inp = divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0];
+                        inp.defaultValue = response[a]['chosenQuantity'];
+                        inp.addEventListener('input', function(){
+                            console.log('entered');
+                            var xhttp2 = new XMLHttpRequest();
+                            var parent = inp.parentElement.parentElement;
+                            var prodName = parent.getElementsByClassName('Cell prodnc')[0].innerText;
+                            var obj = {'name': prodName, 'quantity': inp.value};
+                            console.log(obj);
+                            obj = JSON.stringify(obj);
+                            xhttp2.open('POST', './server/updateQuantity.php', true)
+                            xhttp2.send(obj);
+                            document.location.reload();
+                        })
                         console.log(divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0]);   
                         var totalPrice = response[a]['chosenQuantity']*(response[a]['price']);
                         totalPrice = totalPrice.toString();
@@ -211,7 +224,7 @@
             }
         };
         function deleteCart(){
-            xhttp.open('GET', 'deleteCart.php', true);
+            xhttp.open('GET', './server/deleteCart.php', true);
             xhttp.send();
         }
     </script>

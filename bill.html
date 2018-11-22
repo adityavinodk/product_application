@@ -103,7 +103,7 @@
         var newContent = '<tr class="Row"><td class="n"></td><th class="q"></td><td class="p"></td><td class="st"></td></tr>';
         var xhttp = new XMLHttpRequest();
         var addToCart = document.getElementsByClassName('tb')[0];
-        xhttp.open('GET', 'cart.php', true);
+        xhttp.open('GET', './server/cart.php', true);
         xhttp.send();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
