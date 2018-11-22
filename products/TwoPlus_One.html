@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Product</title>
+    <title>2+ | TwoPlus One</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -29,6 +29,8 @@
             background-color: white;
             background-size: 85%;
             height: 100%;
+            background-repeat: no-repeat;
+            background-position: 50% 0%;
         }
         
         .navbar a {
@@ -122,6 +124,7 @@
             background-image: url("images/bg1.jpg");
             background-color: #cccccc;
             background-size: 100%;
+            background-repeat: no-repeat;
             height: 100%;
         }
         
@@ -170,7 +173,7 @@
 
     <div class="row">
         <div class="column" style="background-color:#aaa;">
-            <img src="../images/TwoPlus_One.png" alt="Picture" height="500px" width="500px">
+            <img src="../images/2p1b.png" alt="Picture" height="500px">
         </div>
 
         <div class="row">
@@ -180,8 +183,7 @@
                 <h3>The world's most powerful circuitry embedded in<br>a design that will make you go wild.</h3>
                 <br></br>
                 <div id='colorButton'>
-                    <button class="button" id="buttblack" name="color" value="black">Black</button><button class="button"
-                        id="buttred" name="color" value="red">Red</button>
+                    <button class="button" id="buttblack" name="color" value="black">Black</button><button class="button" id="buttred" name="color" value="red">Red</button>
                 </div>
                 <br><br>
                 <!-- <button class="button">Size1</button><button class="button">Size2</button> -->
@@ -191,10 +193,9 @@
                 <input type='number' id='chooseAmount' name='quantity' min='1' max='5' />
                 <br><br>
                 <button class="buttonbig" onclick="addToCart()">Add To Cart</button>
-                <button class="buttonbig" onclick="getCart()">Get Cart</button>
             </div>
         </div>
-        <div id="response"></div>
+        <!-- <div id="response"></div> -->
     </div>
     <script type="text/javascript">
         var chosenColor = 'black',
@@ -203,16 +204,19 @@
         var xhttp = new XMLHttpRequest();
         var buttons = colorDiv.getElementsByTagName('button');
         for (var i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener('click', function (e) {
+            buttons[i].addEventListener('click', function(e) {
                 chosenColor = e.target.value;
             })
         }
         var quantity = document.getElementById('chooseAmount').defaultValue = 1;
+
         function addToCart() {
             prodObject = new Object();
             prodObject.name = 'TwoPlus_One';
             prodObject.price = 999;
             prodObject.color = chosenColor;
+            if (prodObject.color === 'black') prodObject.img = '2p1b.png'
+            else prodObject.img = '2p1r.png'
             prodObject.chosenQuantity = parseInt(document.getElementById('chooseAmount').value);
             console.log(prodObject);
             var stringData = JSON.stringify(prodObject);
@@ -221,11 +225,11 @@
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(stringData);
         }
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("response").innerHTML = this.responseText;
-            }
-        };
+        // xhttp.onreadystatechange = function() {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         document.getElementById("response").innerHTML = this.responseText;
+        //     }
+        // };
     </script>
 
 </body>
