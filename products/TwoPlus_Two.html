@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Product</title>
+    <title>2+ | TwoPlus Two</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -25,9 +25,10 @@
         }
         
         .abc {
-            background-image: url("../images/ppage1.png");
+            background-image: url("../images/ppage2.png");
             background-color: white;
             background-size: 85%;
+            background-position: 50% 0%;
             height: 100%;
         }
         
@@ -44,6 +45,8 @@
             font-size: 70px;
             padding: 20%;
             text-align: center;
+            margin: 30px;
+            text-shadow: 0 0 10px white;
         }
         
         h2 {
@@ -159,7 +162,7 @@
 <body>
 
     <div class="abc">
-        <h1>Beauty redefined.</h1>
+        <h1>Manufactured marvel.</h1>
     </div>
     <div class="navbar">
         <a href="../index.html">Home</a>
@@ -170,7 +173,7 @@
 
     <div class="row">
         <div class="column" style="background-color:#aaa;">
-            <img src="../images/TwoPlus_Two.png" alt="Picture" height="500px" width="500px">
+            <img src="../images/2p2b.png" alt="Picture" height="500px" class="IMAGE">
         </div>
 
         <div class="row">
@@ -180,8 +183,7 @@
                 <h3>The world's most powerful circuitry embedded in<br>a design that will make you go wild.</h3>
                 <br></br>
                 <div id='colorButton'>
-                    <button class="button" id="buttblack" name="color" value="black">Black</button><button class="button"
-                        id="buttred" name="color" value="red">Red</button>
+                    <button class="button" id="buttblack" name="color" value="black">Black</button><button class="button" id="buttred" name="color" value="red">Red</button>
                 </div>
                 <br><br>
                 <!-- <button class="button">Size1</button><button class="button">Size2</button> -->
@@ -202,16 +204,22 @@
         var xhttp = new XMLHttpRequest();
         var buttons = colorDiv.getElementsByTagName('button');
         for (var i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener('click', function (e) {
+            buttons[i].addEventListener('click', function(e) {
                 chosenColor = e.target.value;
+                var imgElement = document.getElementsByClassName('IMAGE')[0];
+                if (chosenColor == 'red') imgElement.src = '../images/2p2r.png';
+                else imgElement.src = "../images/2p2b.png";
             })
         }
         var quantity = document.getElementById('chooseAmount').defaultValue = 1;
+
         function addToCart() {
             prodObject = new Object();
             prodObject.name = 'TwoPlus_Two';
             prodObject.price = 1499;
             prodObject.color = chosenColor;
+            if (prodObject.color === 'black') prodObject.img = '2p2b.png'
+            else prodObject.img = '2p2r.png'
             prodObject.chosenQuantity = parseInt(document.getElementById('chooseAmount').value);
             console.log(prodObject);
             var stringData = JSON.stringify(prodObject);
@@ -220,7 +228,7 @@
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(stringData);
         }
-        xhttp.onreadystatechange = function () {
+        xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("response").innerHTML = this.responseText;
             }

@@ -21,6 +21,17 @@
         }
         /* Style the topnav links */
         
+        .topnav {
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            position: fixed;
+            background-color: #333333;
+            width: 100%;
+            text-align: right;
+        }
+        /* Style the topnav links */
+        
         .topnav a {
             float: right;
             display: block;
@@ -32,21 +43,6 @@
         
         body {
             font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        .topnav {
-            overflow: hidden;
-            background-color: #333;
-        }
-        /* Style the topnav links */
-        
-        .topnav a {
-            float: right;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
         }
         /* Style the header */
         
@@ -85,6 +81,7 @@
         .Table {
             display: table;
             justify-content: center;
+            width: 100%;
         }
         
         .Title {
@@ -92,6 +89,7 @@
             text-align: left;
             font-weight: bold;
             font-size: 35px;
+            text-decoration: none;
         }
         
         .Heading {
@@ -113,6 +111,7 @@
             padding-top: 40px;
             padding-bottom: 40px;
             text-align: center;
+            vertical-align: middle;
         }
         
         .imgc {
@@ -139,6 +138,40 @@
             background-color: slategray;
             left: 0%;
         }
+        
+        button {
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+        
+        #cartdel {
+            background-color: #f44336;
+            color: white;
+            left: 20%;
+        }
+        
+        #chkout {
+            text-decoration: none;
+            background-color: white;
+            color: black;
+            left: 30%;
+        }
+        
+        #chkout:hover {
+            background-color: #62d162;
+            color: white;
+        }
+        
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        
+        a:hover {
+            color: white;
+        }
     </style>
     </style>
 </head>
@@ -159,7 +192,7 @@
     <div id="carta">
         <div class="Table">
             <div class="Title">
-                <p style="padding: 20px;"><u>Items</u></p>
+                <p style="padding: 20px;">Items</p>
             </div>
             <!-- <div class="Row">
                 <div class="Cell imgc">
@@ -178,56 +211,78 @@
                 </div>
             </div>
         </div> -->
-    </div>
-    <button onclick="deleteCart()">Delete Cart</button>
-    <button><a href="bill.html">Proceed to Checkout</a></button>
-    <script type='text/javascript'>
-        var newContent = '<div class="Row"><div class="Cell imgc"></div><div class="Cell prodnc"><p>Product Name</p></div><div class="Cell costc"><p>Cost</p></div><div class="Cell qtyc">Quantity <input type="number" id="chooseAmount" name="quantity" min="1" max="5" class="input_quant"/></div><div class="Cell totc"><p>Total</p></div></div>';
-        var xhttp = new XMLHttpRequest();
-        var addToCart = document.getElementsByClassName('Table')[0];
-        xhttp.open('GET', './server/cart.php', true);
-        xhttp.send();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                addToCart.innerHTML = '<div class="Title"><p style="padding: 20px;"><u>Items</u></p></div>';
-                if(this.response != "No Cart"){
-                    var response = JSON.parse(this.response);
-                    console.log(response);
-                    for(a in response){
-                        console.log(response[a]);
-                        addToCart.innerHTML += newContent;
-                        var divElement = addToCart.getElementsByClassName('Row')[addToCart.getElementsByClassName('Row').length-1]
-                        var imageUrl = 'images/'+response[a]['name']+'.png'
-                        divElement.getElementsByClassName('Cell imgc')[0].innerHTML+= '<img src="'+imageUrl+'" width="100" height="100">'
-                        divElement.getElementsByClassName('Cell prodnc')[0].innerText = response[a]['name'];
-                        divElement.getElementsByClassName('Cell costc')[0].innerText = response[a]['price'];
-                        var inp = divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0];
-                        inp.defaultValue = response[a]['chosenQuantity'];
-                        inp.addEventListener('input', function(){
-                            console.log('entered');
-                            var xhttp2 = new XMLHttpRequest();
-                            var parent = inp.parentElement.parentElement;
-                            var prodName = parent.getElementsByClassName('Cell prodnc')[0].innerText;
-                            var obj = {'name': prodName, 'quantity': inp.value};
-                            console.log(obj);
-                            obj = JSON.stringify(obj);
-                            xhttp2.open('POST', './server/updateQuantity.php', true)
-                            xhttp2.send(obj);
-                            document.location.reload();
-                        })
-                        console.log(divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0]);   
-                        var totalPrice = response[a]['chosenQuantity']*(response[a]['price']);
-                        totalPrice = totalPrice.toString();
-                        divElement.getElementsByClassName('Cell totc')[0].innerHTML = '<p>Total Price - '+totalPrice+'</p>'
+        </div>
+        <br><br>
+        <button id="cartdel" onclick="deleteCart()">Delete Cart</button>
+        <button id="chkout"><a href="bill.html">Proceed to Checkout</a></button>
+        <script type='text/javascript'>
+            var newContent = '<div class="Row"><div class="Cell imgc"></div><div class="Cell prodnc"><p>Product Name</p></div><div class="Cell costc"><p>Cost</p></div><div class="Cell qtyc">Quantity <input type="number" id="chooseAmount" name="quantity" min="1" max="5" class="input_quant"/></div><div class="Cell totc"><p>Total</p></div><button class="remove" onclick="removeItem(event)">Remove Item</button></div>';
+            var xhttp = new XMLHttpRequest();
+            var addToCart = document.getElementsByClassName('Table')[0];
+            xhttp.open('GET', './server/cart.php', true);
+            xhttp.send();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    addToCart.innerHTML = '<div class="Title"><p style="padding: 20px;"><u>Items</u></p></div>';
+                    if (this.response != "No Cart") {
+                        var response = JSON.parse(this.response);
+                        console.log(response);
+                        for (a in response) {
+                            console.log(response[a]);
+                            addToCart.innerHTML += newContent;
+                            var divElement = addToCart.getElementsByClassName('Row')[addToCart.getElementsByClassName('Row').length - 1]
+                            var imageUrl = 'images/' + response[a]['img']
+                            divElement.getElementsByClassName('Cell imgc')[0].innerHTML += '<img src="' + imageUrl + '" height="100">'
+                            divElement.getElementsByClassName('Cell prodnc')[0].innerText = response[a]['name'];
+                            divElement.getElementsByClassName('Cell costc')[0].innerText = '$' + response[a]['price'];
+                            var inp = divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0];
+                            inp.defaultValue = response[a]['chosenQuantity'];
+                            inp.addEventListener('input', function() {
+                                console.log('entered');
+                                var xhttp2 = new XMLHttpRequest();
+                                var parent = inp.parentElement.parentElement;
+                                var prodName = parent.getElementsByClassName('Cell prodnc')[0].innerText;
+                                var obj = {
+                                    'name': prodName,
+                                    'quantity': inp.value
+                                };
+                                console.log(obj);
+                                obj = JSON.stringify(obj);
+                                xhttp2.open('POST', './server/updateQuantity.php', true)
+                                xhttp2.send(obj);
+                                document.location.reload();
+                            })
+                            console.log(divElement.getElementsByClassName('Cell qtyc')[0].getElementsByClassName('input_quant')[0]);
+                            var totalPrice = response[a]['chosenQuantity'] * (response[a]['price']);
+                            totalPrice = totalPrice.toString();
+                            divElement.getElementsByClassName('Cell totc')[0].innerHTML = '<p>Total Price - $' + totalPrice + '</p>'
+                        }
+                    }
+                }
+            };
+
+            function removeItem(e) {
+                var xhttp2 = new XMLHttpRequest();
+                xhttp2.open('POST', './server/removeItem.php', true);
+                console.log(e.target.parentElement.getElementsByClassName('Cell prodnc')[0].innerText);
+                var obj = {
+                    'name': e.target.parentElement.getElementsByClassName('Cell prodnc')[0].innerText
+                }
+                console.log(JSON.stringify(obj));
+                xhttp2.send(JSON.stringify(obj));
+                xhttp2.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // document.location.reload();
                     }
                 }
             }
-        };
-        function deleteCart(){
-            xhttp.open('GET', './server/deleteCart.php', true);
-            xhttp.send();
-        }
-    </script>
+
+            function deleteCart() {
+                xhttp.open('GET', './server/deleteCart.php', true);
+                xhttp.send();
+            }
+        </script>
+        <br><br>
 </body>
 
 </html>
