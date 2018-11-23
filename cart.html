@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>Cart</title>
+    <title>2+ | Cart</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/logowhite.png" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -131,7 +132,7 @@
         }
         
         .totc {
-            width: 20%
+            width: 20%;
         }
         
         #carta {
@@ -154,7 +155,7 @@
         
         #chkout {
             text-decoration: none;
-            background-color: white;
+            background-color: #62c162;
             color: black;
             left: 30%;
         }
@@ -211,7 +212,7 @@
                 </div>
                 <button class="remove" onclick="removeItem(event)">Remove Item</button>
             </div> -->
-        </div> 
+        </div>
     </div>
     <br><br>
     <button id="cartdel" onclick="deleteCart()">Delete Cart</button>
@@ -246,7 +247,8 @@
                 }
             }
         };
-        function changeQuantity(e){
+
+        function changeQuantity(e) {
             console.log('entered');
             var xhttp2 = new XMLHttpRequest();
             var parent = e.target.parentElement.parentElement;
@@ -261,6 +263,7 @@
             xhttp2.send(obj);
             document.location.reload();
         }
+
         function removeItem(e) {
             var xhttp2 = new XMLHttpRequest();
             xhttp2.open('POST', './server/removeItem.php', true);
