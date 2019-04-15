@@ -261,7 +261,12 @@
             obj = JSON.stringify(obj);
             xhttp2.open('POST', './server/updateQuantity.php', true)
             xhttp2.send(obj);
-            document.location.reload();
+            xhttp2.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // console.log(this.response);
+                    document.location.reload();
+                }
+            }
         }
 
         function removeItem(e) {
