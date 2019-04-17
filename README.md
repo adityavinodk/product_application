@@ -1,2 +1,2 @@
-# wt-2018
+# product_application
 A basic e-commerce website which uses the Apache Server.
